@@ -68,23 +68,19 @@ in the number bank are moved into either the odd or even category.
 */
 sortAll.addEventListener('click', (event) => {
     event.preventDefault();//prevent the refreshing
-    state.numberBank.forEach(number => {
-        let i = state.numberBank.indexOf(number)
-        //The numbers are placed into the correct bucket based on whether they are odd or even.
-        if(number % 2 === 0) {
-            state.numberBank.splice(i, 1)
-            state.evensNumber.push(number);
-            document.querySelector('#numberBank > output').replaceChildren([...state.numberBank])
-        } else {
-            state.numberBank.splice(i, 1)
-            state.oddsNumber.push(number);
-            document.querySelector('#numberBank > output').replaceChildren([...state.numberBank])
-        };
+   while(state.numberBank.length > 0) {
+    let number = state.numberBank.shift(); //Remove the first number in number bank
+    if(number % 2 === 0) {
+        state.evensNumber.push(number); //Add to evens if even
+    } else {
+        state.oddsNumber.push(number) //Add to odds if odd
+    };
+    document.querySelector('#numberBank > output').innerHTML = [...state.numberBank]
         //console.log('the odds number are ', state.oddsNumber)
         //console.log('the evens number are ', state.evensNumber)
         renderEvens();
         renderOdds(); 
-    });
+    };
 })
 
 //function to render the evens
